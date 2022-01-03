@@ -1,0 +1,22 @@
+import numpy as np
+import math
+import sys 
+
+class MasterCatalogue:
+
+    def generateRegionFile(file_name = 'all'):
+        
+        
+
+    def init(self, target_dir, master_cat_file_name):
+
+        self.target_dir = target_dir
+        with open(target_dir + master_cat_file_name, 'r') as f:
+            lines = [ [entry for entry in line.rstrip('\n').split(' ')] for line in f]
+            self.image_file_names = lines[0]
+            self.object_numbers = [[int(elem) for elem in master_obj] for master_obj in lines[1:]]
+
+        
+            
+
+    

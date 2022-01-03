@@ -1,0 +1,9 @@
+import numpy as np
+import MasterCatalogueObject as MCO 
+
+if __name__=="__main__":
+    target_dir, imgs_dir, single_master_cat_file_name, unified_cat_file_name  = sys.argv[1:]
+    print ('[target_dir, imgs_dir, single_master_cat_file_name, unified_cat_file_name] = ' + str([target_dir, single_master_cat_file_name, unified_cat_file_name]))
+
+    filters = ['g','r','i','z']
+    master_cat = MCO.MasterCatalogue(target_dir, master_cat_name, imgs_dir = target_dir)

@@ -1,0 +1,16 @@
+import  cosmics
+
+def CleanCosmics(image_path, image_names, readnoise = 5.0, sigclip = 5.0, sigfrac = 0.3, objlim = 5.0, maxiter = 4, new_image_prefix = 'crc_'):
+    
+    for image_name in image_names:
+        print 'Beginning cosmic ray cleaning for image ' + image_path + image_name
+        image_array, iamge_header = cosmics.fromfits(image_path + image_name)
+        c = cosmics.cosmicsimage(image_array, readnoise = readnoise, sigclip = sigclip, sigfrac = sigfrac, objlim = objlim)
+        c.run(maxiter = maxiter)
+        image_header['CRCLEANED'] = 'Cosmic rays removed by cosmics.py'
+        cosmics.tofits(image_path + new_image_prefix + image_name, c.cleanarray, image_header)
+
+    print 'Done cleaning cosmic rays. '
+
+    return 1 
+        

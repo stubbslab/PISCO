@@ -1,0 +1,44 @@
+#!/bin/bash
+#Assumes that data has been effectively cleaned up
+echo Beginning process of cleaning extra files from analysis list $1 in directory $2
+science_list_file=$1
+target_dir=$2
+
+science_images_list=$(cat $target_dir$science_list_file)
+#master_cat_file_name=$3
+crc_corrected=${4:-1}
+
+echo crc_corrected is $crc_corrected 
+
+declare -a filters=('g' 'r' 'i' 'z')
+ref_filter=$filters
+ref_image=$science_images_list 
+match_tol_in_deg=0.001
+colmerge_dir=/Users/sasha/Documents/colmerge/colmerge2
+
+for science_image in $science_images_list
+do
+    echo Working on cleaning extra data catalogues of $science_image
+
+    for filter in "${filters[@]}"
+    do
+	target_image="proc_${science_image//.fits}_$filter".fits
+	echo Removing file $target_dir$target_image 
+	rm $target_dir$target_image
+	
+	wcs_fits_file="crc_proc_${science_image//.fits}_$filter"_wcs.fits
+	echo Removing file $target_dir$wcs_fits_file
+	rm $target_dir$wcs_fits_file
+
+	wcs_text_file="crc_proc_${science_image//.fits}_$filter"_wcs.txt
+	echo Removing file $target_dir$wcs_text_file
+	rm $target_dir$wcs_text_file
+
+	object_position_txt_file1="crc_proc_${science_image//.fits}_$filter"_positions.txt
+	object_position_txt_file2="crc_proc_${science_image//.fits}_$filter"_positions_no_numbers.txt
+	echo Removing file $target_dir$object_position_txt_file1
+	rm $target_dir$object_position_txt_file1
+	echo Removing file $target_dir$object_position_txt_file2
+	rm $target_dir$object_position_txt_file2
+
+	
